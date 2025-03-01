@@ -14,7 +14,6 @@ import org.springframework.stereotype.Indexed;
 public class User {
 
     @Id
-    @Indexed
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
