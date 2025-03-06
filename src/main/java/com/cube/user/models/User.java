@@ -1,14 +1,17 @@
 package com.cube.user.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Indexed;
 
 @Entity
 @Data
-@Table(name = "cubeUser")
+@Table(name = "cube_user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
