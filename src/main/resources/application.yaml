@@ -1,0 +1,23 @@
+spring:
+    application:
+        name: cube-ms-user
+
+    datasource:
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+        password: postgres
+
+    jpa:
+        show-sql: true
+        database: POSTGRESQL
+        hibernate:
+            format_sql: true
+            ddl-auto: update
+            generate-ddl: true
+
+    flyway:
+        locations: 'classpath:db/migration'
+
+server:
+    error:
+        include-message: always
