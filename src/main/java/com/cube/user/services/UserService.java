@@ -2,21 +2,16 @@ package com.cube.user.services;
 
 import com.cube.user.models.User;
 import com.cube.user.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor()
 public class UserService {
-
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public User createUser(User user) {
         return userRepository.save(user);

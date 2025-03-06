@@ -2,7 +2,7 @@ package com.cube.user.controllers;
 
 import com.cube.user.models.User;
 import com.cube.user.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,14 +19,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor()
 @RequestMapping("user")
 public class UserController {
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public ResponseEntity<List<User>> getAllUsers() {
