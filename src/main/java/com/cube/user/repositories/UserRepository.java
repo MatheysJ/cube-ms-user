@@ -1,7 +1,12 @@
 package com.cube.user.repositories;
 
-import com.cube.user.models.User;
+import com.cube.user.models.internal.InternalUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<InternalUser, Long> {
+
+    @Override
+    Optional<InternalUser> findById(Long id);
 }
