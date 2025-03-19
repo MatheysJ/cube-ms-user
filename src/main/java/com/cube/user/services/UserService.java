@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@AllArgsConstructor()
+@AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -46,7 +46,13 @@ public class UserService {
         Optional<InternalUser> internalUser = userRepository.findById(id);
 
         return internalUser.map(userMapper::internalToResponse);
+    }
 
+    public Optional<ResponseUser> getUserByMail(String mail) {
+
+        Optional<InternalUser> internalUser = userRepository.findByMail(mail);
+
+        return internalUser.map(userMapper::internalToResponse);
     }
 
     public Optional<ResponseUser> editUserById(Long id, RequestUser body) {

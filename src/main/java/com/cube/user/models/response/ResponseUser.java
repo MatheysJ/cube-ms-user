@@ -1,9 +1,10 @@
 package com.cube.user.models.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseUser {
@@ -12,8 +13,6 @@ public class ResponseUser {
     private String name;
 
     private String mail;
-
-    private String password;
 
     private String profilePicture;
 }

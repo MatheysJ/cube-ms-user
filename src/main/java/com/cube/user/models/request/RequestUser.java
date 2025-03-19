@@ -1,31 +1,29 @@
 package com.cube.user.models.request;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestUser {
 
-    @NotNull
+    @NotBlank
     private String name;
 
-    @NotNull
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$",
-            message = "INVALID_MAIL")
+    @NotBlank
+    @Email
     private String mail;
 
-    @NotNull
+    @NotBlank
     @Pattern(regexp = "^(?=.*[a-z])(?=.*\\d)(?=.*[@$!#%*?&])[A-Za-z\\d@$!%#*?&]{8,20}$",
             message = "INVALID_PASSWORD")
     private String password;
 
-    @NotNull
+    @NotBlank
     private String profilePicture;
 }

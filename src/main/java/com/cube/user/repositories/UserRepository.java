@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<InternalUser, Long> {
 
-    @Override
     Optional<InternalUser> findById(Long id);
+
+    Optional<InternalUser> findByMail(String mail);
 }

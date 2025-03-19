@@ -17,17 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor()
-@RequestMapping("user")
+@AllArgsConstructor
+@RequestMapping("/v1/user")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<ResponseUser>> getAllUsers() {
         List<ResponseUser> users = userService.getAllUsers();
 
@@ -43,18 +41,15 @@ public class UserController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseUser> createUser(@RequestBody @Valid RequestUser body) throws URISyntaxException {
+    @PostMapping()
+    public ResponseEntity<ResponseUser> createUser(@RequestBody @Valid RequestUser body)  {
         ResponseUser user = userService.createUser(body);
 
-        URI location = new URI("/user/" + user.getId());
-
-        return ResponseEntity.created(location).body(user);
+        return ResponseEntity.ok().body(user);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ResponseUser> editUser(@PathVariable("id") Long id, @RequestBody RequestUser body) {
-
 
         return userService.editUserById(id, body)
                 .map(user -> ResponseEntity.ok().body(user))

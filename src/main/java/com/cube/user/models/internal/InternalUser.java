@@ -1,10 +1,6 @@
 package com.cube.user.models.internal;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,8 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @Builder
 @Table(name = "users")
 @Entity(name = "users")
@@ -30,6 +25,7 @@ public class InternalUser implements UserDetails {
 
     private String name;
 
+    @Column(unique = true)
     private String mail;
 
     private String password;
