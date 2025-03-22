@@ -24,15 +24,16 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseUser> register(@RequestBody @Valid RequestUser body)  {
-
+        log.info("Starting register");
         ResponseUser responseUser = authService.register(body);
 
+        log.info("Registered successfully");
         return ResponseEntity.ok().body(responseUser);
     }
 
     @PostMapping("/login")
     public ResponseEntity<ResponseUser> login(@RequestBody @Valid RequestLogin body)  {
-        log.info("Starting login with body [ {} ]", body.toString());
+        log.info("Starting login");
 
         authService.login(body);
 
