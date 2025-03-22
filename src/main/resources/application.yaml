@@ -24,5 +24,6 @@ security:
         minutesToExpire: "${TOKEN_MINUTES_TO_EXPIRE:120}"
 
 server:
+    port: 8080
     error:
         include-message: always
