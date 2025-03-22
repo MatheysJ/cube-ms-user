@@ -28,6 +28,24 @@ public class ExceptionController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
+    @ExceptionHandler(InternalException.class)
+    public ResponseEntity<ExceptionResponse> handleInternalException(InternalException ex) {
+        log.error("InternalException thrown with message: [{}]", ex.getMessage());
+
+        ExceptionResponse response = buildExceptionResponse(ex);
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ExceptionResponse> handleUnauthorizedException(UnauthorizedException ex) {
+        log.warn("UnauthorizedException thrown with message: [{}]", ex.getMessage());
+
+        ExceptionResponse response = buildExceptionResponse(ex);
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
     private ExceptionResponse buildExceptionResponse(BusinessException ex) {
         return ExceptionResponse.builder().code(ex.getCode()).message(ex.getMessage()).build();
     }

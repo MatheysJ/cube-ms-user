@@ -2,7 +2,10 @@ package com.cube.user.controllers;
 
 import com.cube.user.models.request.RequestLogin;
 import com.cube.user.models.request.RequestUser;
+import com.cube.user.models.request.RequestValidate;
+import com.cube.user.models.response.ResponseLogin;
 import com.cube.user.models.response.ResponseUser;
+import com.cube.user.models.response.ResponseValidate;
 import com.cube.user.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,12 +35,22 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseUser> login(@RequestBody @Valid RequestLogin body)  {
+    public ResponseEntity<ResponseLogin> login(@RequestBody @Valid RequestLogin body)  {
         log.info("Starting login");
 
-        authService.login(body);
+        String token = authService.login(body);
 
-        log.info("Logged successfully");
-        return ResponseEntity.ok().build();
+        log.info("Logged in successfully");
+        return ResponseEntity.ok( new ResponseLogin(token));
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<ResponseValidate> validate(@RequestBody @Valid RequestValidate body)  {
+        log.info("Starting token validation");
+
+        String username = authService.validate(body);
+
+        log.info("Validated successfully");
+        return ResponseEntity.ok( new ResponseValidate(username));
     }
 }

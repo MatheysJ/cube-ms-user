@@ -18,6 +18,11 @@ spring:
     flyway:
         locations: 'classpath:db/migration'
 
+security:
+    token:
+        secret: "${JWT_SECRET:JWT_SECRET}"
+        minutesToExpire: "${TOKEN_MINUTES_TO_EXPIRE:120}"
+
 server:
     error:
         include-message: always
