@@ -6,11 +6,11 @@ import com.cube.user.models.response.ResponseUser;
 import com.cube.user.utils.JsonUtils;
 
 public class UserFactory {
-    static private String idMock = "123";
-    static private String mailMock = "abc@abc";
-    static private String nameMock = "Test User";
-    static private String profilePictureMock = "example.png";
-    static private String passwordMock = "Abcdef@123";
+    static private final String idMock = "123";
+    static private final String mailMock = "abc@abc";
+    static private final String nameMock = "Test User";
+    static private final String profilePictureMock = "example.png";
+    static private final String passwordMock = "Abcdef@123";
 
     static public ResponseUser getMockOfResponseUser () {
         return ResponseUser.builder()

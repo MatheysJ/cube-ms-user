@@ -7,7 +7,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.cube.user.exceptions.InternalException;
 import com.cube.user.exceptions.UnauthorizedException;
 import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.internal.InternalUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;

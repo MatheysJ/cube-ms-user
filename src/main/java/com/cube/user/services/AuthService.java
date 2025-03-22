@@ -2,7 +2,6 @@ package com.cube.user.services;
 
 import com.cube.user.exceptions.BusinessException;
 import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.internal.InternalUser;
 import com.cube.user.models.request.RequestLogin;
 import com.cube.user.models.request.RequestUser;
 import com.cube.user.models.request.RequestValidate;
