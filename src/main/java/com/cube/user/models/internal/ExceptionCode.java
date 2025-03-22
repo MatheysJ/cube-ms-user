@@ -7,7 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ExceptionCode {
     ALREADY_EXISTS("Usuário com o e-mail informado já existe"),
-    INVALID_CREDENTIALS("Credenciais não batem");
+    INVALID_CREDENTIALS("Credenciais não batem"),
+    USER_WITH_ID_DOESNT_EXIST("Usuário com id informado não existe");
 
     private final String message;
 }
