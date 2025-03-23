@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-@WebMvcTest(value = UserController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest(value = UserController.class, excludeAutoConfiguration = { SecurityAutoConfiguration.class })
 public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;

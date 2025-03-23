@@ -23,7 +23,7 @@ public class UserService {
     private final UserMapper userMapper;
 
     public ResponseUser createUser(RequestUser body) {
-        InternalUser internalUser = userRepository.save( InternalUser.builder()
+        InternalUser internalUser = userRepository.save(InternalUser.builder()
                 .name(body.getName())
                 .mail(body.getMail())
                 .password(body.getPassword())
