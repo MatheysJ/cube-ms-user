@@ -54,7 +54,7 @@ public class UserController {
         ResponseUser user = userService.createUser(body);
 
         log.info("Successfully created user");
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PutMapping("/{id}")
@@ -74,7 +74,7 @@ public class UserController {
         userService.deleteUserById(id);
 
         log.info("Successfully deleted user");
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
