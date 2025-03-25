@@ -5,7 +5,7 @@ import com.cube.user.models.request.RequestValidate;
 import com.cube.user.utils.JsonUtils;
 
 public class TokenFactory {
-    static RequestLogin getMockOfRequestLogin() {
+    static public RequestLogin getMockOfRequestLogin() {
         return RequestLogin.builder().mail("abc@abc").password("Abcdef@123").build();
     }
 
@@ -20,5 +20,4 @@ public class TokenFactory {
     static public String getMockOfRequestValidateAsJson() {
         return JsonUtils.toJson(getMockOfRequestValidate());
     }
-
 }
