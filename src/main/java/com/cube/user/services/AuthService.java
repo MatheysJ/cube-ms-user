@@ -1,8 +1,7 @@
 package com.cube.user.services;
 
-import com.cube.user.exceptions.BusinessException;
+import com.cube.user.exceptions.ConflitException;
 import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.internal.InternalUser;
 import com.cube.user.models.request.RequestLogin;
 import com.cube.user.models.request.RequestUser;
 import com.cube.user.models.request.RequestValidate;
@@ -28,7 +27,7 @@ public class AuthService {
     public ResponseUser register(RequestUser requestUser) {
         log.info("Starting user register validation");
         if (this.userService.getUserByMail(requestUser.getMail()).isPresent()) {
-            throw new BusinessException(ExceptionCode.ALREADY_EXISTS);
+            throw new ConflitException(ExceptionCode.ALREADY_EXISTS);
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(requestUser.getPassword());

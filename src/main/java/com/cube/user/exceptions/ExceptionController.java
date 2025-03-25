@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionController {
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ExceptionResponse> handleBusinessException(BusinessException ex) {
-        log.warn("BusinessException thrown with message: [{}]", ex.getMessage());
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ExceptionResponse> handleBusinessException(BadRequestException ex) {
+        log.warn("BadRequestException thrown with message: [{}]", ex.getMessage());
 
         ExceptionResponse response = buildExceptionResponse(ex);
 
@@ -44,6 +44,15 @@ public class ExceptionController {
         ExceptionResponse response = buildExceptionResponse(ex);
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
+    @ExceptionHandler(ConflitException.class)
+    public ResponseEntity<ExceptionResponse> handleBusinessException(ConflitException ex) {
+        log.warn("ConflitException thrown with message: [{}]", ex.getMessage());
+
+        ExceptionResponse response = buildExceptionResponse(ex);
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
 
     private ExceptionResponse buildExceptionResponse(BusinessException ex) {

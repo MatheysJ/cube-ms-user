@@ -10,8 +10,8 @@ import com.cube.user.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/auth")
 public class AuthController {
     private final AuthService authService;
-    private final AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
     public ResponseEntity<ResponseUser> register(@RequestBody @Valid RequestUser body)  {
@@ -31,7 +30,7 @@ public class AuthController {
         ResponseUser responseUser = authService.register(body);
 
         log.info("Registered successfully");
-        return ResponseEntity.ok().body(responseUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
     }
 
     @PostMapping("/login")
@@ -41,7 +40,7 @@ public class AuthController {
         String token = authService.login(body);
 
         log.info("Logged in successfully");
-        return ResponseEntity.ok( new ResponseLogin(token));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseLogin(token));
     }
 
     @PostMapping("/validate")
