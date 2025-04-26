@@ -88,6 +88,7 @@ class UserServiceTests {
 
         Optional<ResponseUser> response = userService.getUserByMail("A@B");
 
+        //noinspection OptionalGetWithoutIsPresent
         Assertions.assertEquals(response.get().getClass(), ResponseUser.class);
     }
 
