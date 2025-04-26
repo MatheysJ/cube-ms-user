@@ -1,11 +1,14 @@
 package com.cube.user.services;
 
+import com.cube.user.clients.asaas.AsaasClient;
+import com.cube.user.dtos.internal.asaas.response.CreateCustomerResponse;
 import com.cube.user.exceptions.ConflitException;
 import com.cube.user.dtos.internal.ExceptionCode;
 import com.cube.user.dtos.request.RequestLogin;
 import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.dtos.response.ResponseUser;
+import com.cube.user.mappers.UserMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +26,8 @@ public class AuthService {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final AsaasClient asaasClient;
+    private final UserMapper userMapper;
 
     public ResponseUser register(RequestUser requestUser) {
         log.info("Starting user register validation");
@@ -30,11 +35,18 @@ public class AuthService {
             throw new ConflitException(ExceptionCode.ALREADY_EXISTS);
         }
 
+        log.info("Starting User password encryption");
         String encryptedPassword = new BCryptPasswordEncoder().encode(requestUser.getPassword());
-        requestUser.setPassword(encryptedPassword);
 
-        log.info("User password encrypted successfully");
-        return userService.createUser(requestUser);
+        log.info("Starting customer creation on Asaas");
+        CreateCustomerResponse asaasCustomer = asaasClient.createCustomer(userMapper.requestToAsaas(requestUser));
+
+        log.info("Starting to save User in database");
+        requestUser.setPassword(encryptedPassword);
+        ResponseUser savedUser = userService.createUser(requestUser, asaasCustomer.getId());
+
+        log.info("User successfully saved in Database");
+        return savedUser;
     }
 
     public String login(RequestLogin requestLogin) {

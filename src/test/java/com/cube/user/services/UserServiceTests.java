@@ -33,6 +33,7 @@ class UserServiceTests {
     private final InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
     private final ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
     private final RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
+    private final String mockAsaasId = UserFactory.getMockOfAsaasId();
 
     @Test
     void shouldGetAllUsersAndReturnCorrectData () {
@@ -59,7 +60,7 @@ class UserServiceTests {
         Mockito.when(userMapper.internalToResponse(Mockito.any())).thenReturn(mockResponseUser);
         Mockito.when(userRepository.save(Mockito.any(InternalUser.class))).thenReturn(mockInternalUser);
 
-        ResponseUser response = userService.createUser(mockRequestUser);
+        ResponseUser response = userService.createUser(mockRequestUser, mockAsaasId);
 
         Assertions.assertEquals(response.getClass(), ResponseUser.class);
     }

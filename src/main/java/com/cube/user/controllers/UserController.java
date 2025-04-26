@@ -8,14 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -48,10 +41,13 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<ResponseUser> createUser(@RequestBody @Valid RequestUser body)  {
+    public ResponseEntity<ResponseUser> createUser(
+            @RequestHeader("x_customer_asaas_id") @Valid String asaasId,
+            @RequestBody @Valid RequestUser body
+    )  {
         log.info("Start creating user");
 
-        ResponseUser user = userService.createUser(body);
+        ResponseUser user = userService.createUser(body, asaasId);
 
         log.info("Successfully created user");
         return ResponseEntity.status(HttpStatus.CREATED).body(user);

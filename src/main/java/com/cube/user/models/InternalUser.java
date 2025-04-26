@@ -24,6 +24,8 @@ public class InternalUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String asaasId;
+
     private String name;
 
     @Column(unique = true)
@@ -32,6 +34,10 @@ public class InternalUser implements UserDetails {
     private String password;
 
     private Role role;
+
+    private String cpfCnpj;
+
+    private String phone;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

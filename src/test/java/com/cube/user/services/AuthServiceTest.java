@@ -3,6 +3,7 @@ package com.cube.user.services;
 import com.cube.user.exceptions.ConflitException;
 import com.cube.user.factory.TokenFactory;
 import com.cube.user.factory.UserFactory;
+import com.cube.user.mappers.UserMapper;
 import com.cube.user.models.InternalUser;
 import com.cube.user.dtos.request.RequestLogin;
 import com.cube.user.dtos.request.RequestUser;
@@ -33,6 +34,9 @@ public class AuthServiceTest {
     @Mock
     TokenService tokenService;
 
+    @Mock
+    private UserMapper userMapper;
+
     @InjectMocks
     private AuthService authService;
 
@@ -52,7 +56,7 @@ public class AuthServiceTest {
     @Test
     void shouldReturnCreatedUserWhenUserIsRegisteredSuccessfully() {
         Mockito.when(userService.getUserByMail(Mockito.anyString())).thenReturn(Optional.empty());
-        Mockito.when(userService.createUser(Mockito.any(RequestUser.class))).thenReturn(mockResponseUser);
+        Mockito.when(userService.createUser(Mockito.any(RequestUser.class), Mockito.anyString())).thenReturn(mockResponseUser);
 
         ResponseUser response = authService.register(mockRequestUser);
 

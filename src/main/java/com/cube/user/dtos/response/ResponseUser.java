@@ -15,4 +15,8 @@ public class ResponseUser {
     private String name;
 
     private String mail;
+
+    private String phone;
+
+    private String cpfCnpj;
 }

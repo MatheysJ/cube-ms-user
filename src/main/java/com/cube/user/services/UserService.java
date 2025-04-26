@@ -22,15 +22,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public ResponseUser createUser(RequestUser body) {
-        InternalUser internalUser = userRepository.save(InternalUser.builder()
-                .name(body.getName())
-                .mail(body.getMail())
-                .password(body.getPassword())
-                .role(Role.USER)
-                .build());
+    public ResponseUser createUser(RequestUser body, String asaasId) {
+        InternalUser internalUser = userMapper.requestToInternal(body);
+        internalUser.setRole(Role.USER);
+        internalUser.setAsaasId(asaasId);
 
-        return userMapper.internalToResponse(internalUser);
+        InternalUser newUser = userRepository.save(internalUser);
+
+        return userMapper.internalToResponse(newUser);
     }
 
     public List<ResponseUser> getAllUsers() {

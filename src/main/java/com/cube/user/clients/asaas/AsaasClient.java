@@ -1,17 +1,17 @@
-package com.cube.user.clients;
+package com.cube.user.clients.asaas;
 
 
+import com.cube.user.clients.asaas.config.AsaasClientConfig;
 import com.cube.user.dtos.internal.asaas.request.CreateCustomerBody;
 import com.cube.user.dtos.internal.asaas.response.CreateCustomerResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient("asaas")
+@FeignClient(value = "asaas", configuration = AsaasClientConfig.class)
 public interface AsaasClient {
 
     @PostMapping(value = "/v3/customers")
-    CreateCustomerResponse createCustomer(@RequestHeader("access_token") String accessToken, @RequestBody CreateCustomerBody body);
+    CreateCustomerResponse createCustomer(@RequestBody CreateCustomerBody body);
 
 }

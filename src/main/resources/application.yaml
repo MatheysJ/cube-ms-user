@@ -36,3 +36,6 @@ server:
     port: 8080
     error:
         include-message: always
+
+asaas:
+    api-key: "${ASAAS_API_KEY}"

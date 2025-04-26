@@ -10,6 +10,7 @@ public class UserFactory {
     static private final String mailMock = "abc@abc";
     static private final String nameMock = "Test User";
     static private final String passwordMock = "Abcdef@123";
+    static private final String asaasIdMock = "456";
 
     static public ResponseUser getMockOfResponseUser () {
         return ResponseUser.builder()
@@ -50,5 +51,9 @@ public class UserFactory {
 
     static public String getMockOfInvalidRequestUserAsJson () {
         return JsonUtils.toJson(getMockOfInvalidRequestUser());
+    }
+
+    static public String getMockOfAsaasId () {
+        return asaasIdMock;
     }
 }

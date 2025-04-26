@@ -49,7 +49,7 @@ public class UserControllerTest {
 
     @Test
     void shouldReturnCreatedWithDataWhenCreatingAnUser () throws Exception {
-        Mockito.when(userService.createUser(Mockito.any(RequestUser.class))).thenReturn(mockResponseUser);
+        Mockito.when(userService.createUser(Mockito.any(RequestUser.class), Mockito.anyString())).thenReturn(mockResponseUser);
 
         mockMvc.perform(
                 post("/v1/user")
