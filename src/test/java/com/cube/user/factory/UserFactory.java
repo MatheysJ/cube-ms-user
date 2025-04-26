@@ -1,5 +1,6 @@
 package com.cube.user.factory;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.models.InternalUser;
 import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.response.ResponseUser;
@@ -8,6 +9,8 @@ import com.cube.user.utils.JsonUtils;
 public class UserFactory {
     static private final String idMock = "123";
     static private final String mailMock = "abc@abc";
+    static private final String phoneMock = "123456789";
+    static private final String cpfCnpjMock = "12345678912";
     static private final String nameMock = "Test User";
     static private final String passwordMock = "Abcdef@123";
     static private final String asaasIdMock = "456";
@@ -17,6 +20,17 @@ public class UserFactory {
                 .id(idMock)
                 .mail(mailMock)
                 .name(nameMock)
+                .build();
+    }
+
+    static public InternalResponseUser getMockOfInternalResponseUser () {
+        return InternalResponseUser.builder()
+                .id(idMock)
+                .asaasId(asaasIdMock)
+                .mail(mailMock)
+                .name(nameMock)
+                .phone(phoneMock)
+                .cpfCnpj(cpfCnpjMock)
                 .build();
     }
 

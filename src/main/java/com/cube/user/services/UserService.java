@@ -1,5 +1,6 @@
 package com.cube.user.services;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.exceptions.NotFoundException;
 import com.cube.user.mappers.UserMapper;
 import com.cube.user.dtos.internal.ExceptionCode;
@@ -35,16 +36,13 @@ public class UserService {
     public List<ResponseUser> getAllUsers() {
         Stream<InternalUser> users = userRepository.findAll().stream();
 
-        return users
-                .map(userMapper::internalToResponse)
-                .collect(Collectors.toList());
-
+        return users.map(userMapper::internalToResponse).collect(Collectors.toList());
     }
 
-    public ResponseUser getUserById(Long id) {
+    public InternalResponseUser getUserById(Long id) {
         InternalUser internalUser = getInternalUserByIdOrThrow(id);
 
-        return userMapper.internalToResponse(internalUser);
+        return userMapper.internalToInternalResponse(internalUser);
     }
 
     public Optional<ResponseUser> getUserByMail(String mail) {

@@ -1,6 +1,7 @@
 package com.cube.user.controllers;
 
 import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.UserService;
 import jakarta.validation.Valid;
@@ -30,10 +31,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseUser> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<InternalResponseUser> getUserById(@PathVariable("id") Long id) {
         log.info("Start getting user by id");
 
-        ResponseUser user = userService.getUserById(id);
+        InternalResponseUser user = userService.getUserById(id);
 
         log.info("Successfully got user by id");
         return ResponseEntity.ok().body(user);

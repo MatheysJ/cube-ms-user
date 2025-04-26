@@ -3,6 +3,7 @@ package com.cube.user.controllers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.factory.UserFactory;
 import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.response.ResponseUser;
@@ -27,6 +28,7 @@ public class UserControllerTest {
     private UserService userService;
 
     ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
+    InternalResponseUser mockInternalResponseUser = UserFactory.getMockOfInternalResponseUser();
     String mockRequestUserAsJson = UserFactory.getMockOfRequestUserAsJson();
 
     @Test
@@ -40,7 +42,7 @@ public class UserControllerTest {
 
     @Test
     void shouldReturnUserById () throws Exception {
-        Mockito.when(userService.getUserById(Mockito.anyLong())).thenReturn(mockResponseUser);
+        Mockito.when(userService.getUserById(Mockito.anyLong())).thenReturn(mockInternalResponseUser);
 
         mockMvc.perform(
                 get("/v1/user/123").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()
