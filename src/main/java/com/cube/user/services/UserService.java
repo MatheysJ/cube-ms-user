@@ -2,11 +2,11 @@ package com.cube.user.services;
 
 import com.cube.user.exceptions.NotFoundException;
 import com.cube.user.mappers.UserMapper;
-import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.internal.Role;
-import com.cube.user.models.internal.InternalUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.internal.ExceptionCode;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.Role;
+import com.cube.user.models.InternalUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

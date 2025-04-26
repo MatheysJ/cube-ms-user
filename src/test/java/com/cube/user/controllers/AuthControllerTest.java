@@ -5,10 +5,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.cube.user.factory.TokenFactory;
 import com.cube.user.factory.UserFactory;
-import com.cube.user.models.request.RequestLogin;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.request.RequestValidate;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.request.RequestLogin;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.RequestValidate;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.AuthService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

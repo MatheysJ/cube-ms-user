@@ -1,6 +1,6 @@
 package com.cube.user.exceptions;
 
-import com.cube.user.models.internal.ExceptionCode;
+import com.cube.user.dtos.internal.ExceptionCode;
 
 public class BusinessException extends RuntimeException {
 

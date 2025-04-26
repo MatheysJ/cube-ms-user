@@ -1,11 +1,11 @@
 package com.cube.user.controllers;
 
-import com.cube.user.models.request.RequestLogin;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.request.RequestValidate;
-import com.cube.user.models.response.ResponseLogin;
-import com.cube.user.models.response.ResponseUser;
-import com.cube.user.models.response.ResponseValidate;
+import com.cube.user.dtos.request.RequestLogin;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.RequestValidate;
+import com.cube.user.dtos.response.ResponseLogin;
+import com.cube.user.dtos.response.ResponseUser;
+import com.cube.user.dtos.response.ResponseValidate;
 import com.cube.user.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

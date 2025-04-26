@@ -1,4 +1,4 @@
-package com.cube.user.models.response;
+package com.cube.user.dtos.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

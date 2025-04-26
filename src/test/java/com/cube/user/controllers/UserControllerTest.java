@@ -4,8 +4,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.cube.user.factory.UserFactory;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

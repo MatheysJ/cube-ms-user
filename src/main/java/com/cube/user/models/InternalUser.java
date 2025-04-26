@@ -1,5 +1,6 @@
-package com.cube.user.models.internal;
+package com.cube.user.models;
 
+import com.cube.user.dtos.internal.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

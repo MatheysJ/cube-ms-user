@@ -1,6 +1,6 @@
 package com.cube.user.repositories;
 
-import com.cube.user.models.internal.InternalUser;
+import com.cube.user.models.InternalUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

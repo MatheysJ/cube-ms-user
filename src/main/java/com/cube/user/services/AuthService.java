@@ -1,11 +1,11 @@
 package com.cube.user.services;
 
 import com.cube.user.exceptions.ConflitException;
-import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.request.RequestLogin;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.request.RequestValidate;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.internal.ExceptionCode;
+import com.cube.user.dtos.request.RequestLogin;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.RequestValidate;
+import com.cube.user.dtos.response.ResponseUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

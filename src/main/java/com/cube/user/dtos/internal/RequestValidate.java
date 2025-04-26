@@ -1,4 +1,4 @@
-package com.cube.user.models.request;
+package com.cube.user.dtos.internal;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

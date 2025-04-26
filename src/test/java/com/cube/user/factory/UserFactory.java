@@ -1,8 +1,8 @@
 package com.cube.user.factory;
 
-import com.cube.user.models.internal.InternalUser;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.models.InternalUser;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.utils.JsonUtils;
 
 public class UserFactory {

@@ -1,8 +1,8 @@
 package com.cube.user.config;
 
 import com.cube.user.exceptions.UnauthorizedException;
-import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.internal.InternalUser;
+import com.cube.user.dtos.internal.ExceptionCode;
+import com.cube.user.models.InternalUser;
 import com.cube.user.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.User;

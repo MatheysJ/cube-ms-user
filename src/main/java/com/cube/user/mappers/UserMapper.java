@@ -1,7 +1,7 @@
 package com.cube.user.mappers;
 
-import com.cube.user.models.internal.InternalUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.models.InternalUser;
+import com.cube.user.dtos.response.ResponseUser;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -1,7 +1,7 @@
 package com.cube.user.controllers;
 
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
