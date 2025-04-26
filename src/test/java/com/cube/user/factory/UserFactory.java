@@ -9,7 +9,6 @@ public class UserFactory {
     static private final String idMock = "123";
     static private final String mailMock = "abc@abc";
     static private final String nameMock = "Test User";
-    static private final String profilePictureMock = "example.png";
     static private final String passwordMock = "Abcdef@123";
 
     static public ResponseUser getMockOfResponseUser () {
@@ -17,7 +16,6 @@ public class UserFactory {
                 .id(idMock)
                 .mail(mailMock)
                 .name(nameMock)
-                .profilePicture(profilePictureMock)
                 .build();
     }
 
@@ -25,7 +23,6 @@ public class UserFactory {
         return RequestUser.builder()
                 .mail(mailMock)
                 .name(nameMock)
-                .profilePicture(profilePictureMock)
                 .password(passwordMock)
                 .build();
     }
@@ -47,7 +44,6 @@ public class UserFactory {
                 .id(Long.parseLong(idMock))
                 .mail(mailMock)
                 .name(nameMock)
-                .profilePicture(profilePictureMock)
                 .password(passwordMock)
                 .build();
     }

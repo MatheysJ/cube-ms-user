@@ -15,6 +15,4 @@ public class ResponseUser {
     private String name;
 
     private String mail;
-
-    private String profilePicture;
 }

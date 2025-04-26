@@ -27,7 +27,6 @@ public class UserService {
                 .name(body.getName())
                 .mail(body.getMail())
                 .password(body.getPassword())
-                .profilePicture(body.getProfilePicture())
                 .role(Role.USER)
                 .build());
 
@@ -63,7 +62,6 @@ public class UserService {
                 .name(body.getName())
                 .mail(body.getMail())
                 .password(body.getPassword())
-                .profilePicture(body.getProfilePicture())
                 .role(Role.USER)
                 .id(internalUser.getId())
                 .build());

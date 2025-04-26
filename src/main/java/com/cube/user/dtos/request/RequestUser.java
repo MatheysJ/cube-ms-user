@@ -26,6 +26,4 @@ public class RequestUser {
             message = "INVALID_PASSWORD")
     private String password;
 
-    @NotBlank
-    private String profilePicture;
 }

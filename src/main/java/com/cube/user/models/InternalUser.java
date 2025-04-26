@@ -31,8 +31,6 @@ public class InternalUser implements UserDetails {
 
     private String password;
 
-    private String profilePicture;
-
     private Role role;
 
     @Override
