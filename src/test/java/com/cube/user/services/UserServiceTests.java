@@ -1,5 +1,6 @@
 package com.cube.user.services;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.exceptions.NotFoundException;
 import com.cube.user.factory.UserFactory;
 import com.cube.user.mappers.UserMapper;
@@ -70,9 +71,9 @@ class UserServiceTests {
         Mockito.when(userMapper.internalToResponse(Mockito.any())).thenReturn(mockResponseUser);
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(mockInternalUser));
 
-        ResponseUser response = userService.getUserById(1L);
+        InternalResponseUser response = userService.getUserById(1L);
 
-        Assertions.assertEquals(response.getClass(), ResponseUser.class);
+        Assertions.assertEquals(response.getClass(), InternalResponseUser.class);
     }
 
     @Test
