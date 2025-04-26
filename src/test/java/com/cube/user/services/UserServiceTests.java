@@ -30,9 +30,9 @@ class UserServiceTests {
     @InjectMocks
     private UserService userService;
 
-    private InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
-    private ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
-    private RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
+    private final InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
+    private final ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
+    private final RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
 
     @Test
     void shouldGetAllUsersAndReturnCorrectData () {

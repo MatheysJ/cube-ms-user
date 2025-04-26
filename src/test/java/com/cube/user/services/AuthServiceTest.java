@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -37,10 +36,10 @@ public class AuthServiceTest {
     @InjectMocks
     private AuthService authService;
 
-    private RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
-    private ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
-    private RequestLogin mockRequestLogin = TokenFactory.getMockOfRequestLogin();
-    private InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
+    private final RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
+    private final ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
+    private final RequestLogin mockRequestLogin = TokenFactory.getMockOfRequestLogin();
+    private final InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
 
     @Test
     void shouldThrowConflictExceptionWhenRegisteringWithNonUniqueMail() {
@@ -62,8 +61,6 @@ public class AuthServiceTest {
 
     @Test
     void shouldCallAuthenticationManagerOnLogin() {
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken("user", "pass");
         Authentication authentication = Mockito.mock(Authentication.class);
         Mockito.when(authentication.getPrincipal()).thenReturn(mockInternalUser);
         Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenReturn(authentication);
