@@ -29,7 +29,7 @@ spring:
 
 security:
     token:
-        secret: "${JWT_SECRET:JWT_SECRET}"
+        secret: "${JWT_SECRET}"
         minutesToExpire: "${TOKEN_MINUTES_TO_EXPIRE:120}"
 
 server:
