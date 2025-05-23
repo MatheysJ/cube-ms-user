@@ -51,6 +51,12 @@ public class UserService {
 
         return internalUser.map(userMapper::internalToResponse);
     }
+    public Optional<ResponseUser> getUserByCpfCnpj(String cpfCnpj) {
+
+        Optional<InternalUser> internalUser = userRepository.findByCpfCnpj(cpfCnpj);
+
+        return internalUser.map(userMapper::internalToResponse);
+    }
 
     public ResponseUser editUserById(Long id, RequestUser body) {
         InternalUser internalUser = getInternalUserByIdOrThrow(id);

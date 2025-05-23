@@ -2,6 +2,7 @@ package com.cube.user.mappers;
 
 import com.cube.user.dtos.internal.asaas.request.CreateCustomerBody;
 import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.Customer;
 import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.models.InternalUser;
 import com.cube.user.dtos.response.ResponseUser;
@@ -24,4 +25,7 @@ public interface UserMapper {
 
     @BeanMapping(unmappedTargetPolicy = ReportingPolicy.IGNORE)
     InternalResponseUser internalToInternalResponse(InternalUser internalUser);
+
+    @BeanMapping(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+    Customer internalToCustomer(InternalUser internalResponseUser);
 }
