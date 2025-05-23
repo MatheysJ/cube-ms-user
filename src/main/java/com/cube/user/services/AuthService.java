@@ -81,6 +81,7 @@ public class AuthService {
                 .domain("localhost")
                 .secure(true)
                 .httpOnly(true)
+                .path("/")
                 .build();
 
         return cookie.toString();
