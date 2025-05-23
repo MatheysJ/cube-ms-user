@@ -7,9 +7,11 @@ import com.cube.user.dtos.response.ResponseLogin;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.dtos.response.ResponseValidate;
 import com.cube.user.services.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +36,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseLogin> login(@RequestBody @Valid RequestLogin body)  {
+    public ResponseEntity<ResponseLogin> login(HttpServletRequest request, @RequestBody @Valid RequestLogin body)  {
         log.info("Starting login");
 
         String token = authService.login(body);
+        HttpHeaders cookieHeaders = authService.getAccessTokenHeaders(request, token);
 
         log.info("Logged in successfully");
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseLogin(token));
+        return new ResponseEntity(new ResponseLogin(token), cookieHeaders, HttpStatus.CREATED);
     }
 
     @PostMapping("/validate")

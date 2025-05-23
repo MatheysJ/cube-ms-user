@@ -9,14 +9,19 @@ import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.mappers.UserMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.Duration;
 
 @Slf4j
 @Service
@@ -68,6 +73,26 @@ public class AuthService {
 
         log.info("User token validated successfully");
         return subject;
+    }
+
+    private String createAccessTokenCookie(HttpServletRequest request, String token) {
+        ResponseCookie cookie = ResponseCookie.from("accessToken", token)
+                .maxAge(Duration.ofMinutes(30))
+                .domain("localhost")
+                .secure(true)
+                .httpOnly(true)
+                .build();
+
+        return cookie.toString();
+    }
+    
+    public HttpHeaders getAccessTokenHeaders(HttpServletRequest request, String token) {
+        String cookie = createAccessTokenCookie(request, token);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, cookie);
+
+        return headers;
     }
 
 }
