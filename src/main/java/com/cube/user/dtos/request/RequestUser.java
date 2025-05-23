@@ -1,4 +1,4 @@
-package com.cube.user.models.request;
+package com.cube.user.dtos.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,5 +27,9 @@ public class RequestUser {
     private String password;
 
     @NotBlank
-    private String profilePicture;
+    private String cpfCnpj;
+
+    @NotBlank
+    private String phone;
+
 }

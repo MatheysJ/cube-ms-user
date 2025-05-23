@@ -3,11 +3,12 @@ package com.cube.user.services;
 import com.cube.user.exceptions.ConflitException;
 import com.cube.user.factory.TokenFactory;
 import com.cube.user.factory.UserFactory;
-import com.cube.user.models.internal.InternalUser;
-import com.cube.user.models.request.RequestLogin;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.request.RequestValidate;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.mappers.UserMapper;
+import com.cube.user.models.InternalUser;
+import com.cube.user.dtos.request.RequestLogin;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.RequestValidate;
+import com.cube.user.dtos.response.ResponseUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -34,13 +34,16 @@ public class AuthServiceTest {
     @Mock
     TokenService tokenService;
 
+    @Mock
+    private UserMapper userMapper;
+
     @InjectMocks
     private AuthService authService;
 
-    private RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
-    private ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
-    private RequestLogin mockRequestLogin = TokenFactory.getMockOfRequestLogin();
-    private InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
+    private final RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
+    private final ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
+    private final RequestLogin mockRequestLogin = TokenFactory.getMockOfRequestLogin();
+    private final InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
 
     @Test
     void shouldThrowConflictExceptionWhenRegisteringWithNonUniqueMail() {
@@ -53,7 +56,7 @@ public class AuthServiceTest {
     @Test
     void shouldReturnCreatedUserWhenUserIsRegisteredSuccessfully() {
         Mockito.when(userService.getUserByMail(Mockito.anyString())).thenReturn(Optional.empty());
-        Mockito.when(userService.createUser(Mockito.any(RequestUser.class))).thenReturn(mockResponseUser);
+        Mockito.when(userService.createUser(Mockito.any(RequestUser.class), Mockito.anyString())).thenReturn(mockResponseUser);
 
         ResponseUser response = authService.register(mockRequestUser);
 
@@ -62,8 +65,6 @@ public class AuthServiceTest {
 
     @Test
     void shouldCallAuthenticationManagerOnLogin() {
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken("user", "pass");
         Authentication authentication = Mockito.mock(Authentication.class);
         Mockito.when(authentication.getPrincipal()).thenReturn(mockInternalUser);
         Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class))).thenReturn(authentication);

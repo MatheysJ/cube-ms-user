@@ -1,5 +1,6 @@
-package com.cube.user.models.response;
+package com.cube.user.dtos.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,12 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseUser {
-    private String id;
-
-    private String name;
-
+public class RequestLogin {
+    @NotBlank
     private String mail;
 
-    private String profilePicture;
+    @NotBlank
+    private String password;
 }

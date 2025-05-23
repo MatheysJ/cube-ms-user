@@ -1,5 +1,6 @@
-package com.cube.user.models.internal;
+package com.cube.user.models;
 
+import com.cube.user.dtos.internal.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,6 +24,8 @@ public class InternalUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String asaasId;
+
     private String name;
 
     @Column(unique = true)
@@ -30,9 +33,11 @@ public class InternalUser implements UserDetails {
 
     private String password;
 
-    private String profilePicture;
-
     private Role role;
+
+    private String cpfCnpj;
+
+    private String phone;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

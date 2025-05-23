@@ -5,18 +5,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.cube.user.factory.TokenFactory;
 import com.cube.user.factory.UserFactory;
-import com.cube.user.models.request.RequestLogin;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.request.RequestValidate;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.request.RequestLogin;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.RequestValidate;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.AuthService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(value = AuthController.class, excludeAutoConfiguration = { SecurityAutoConfiguration.class })
@@ -25,7 +25,7 @@ class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private AuthService authService;
 
     ResponseUser responseUser = UserFactory.getMockOfResponseUser();

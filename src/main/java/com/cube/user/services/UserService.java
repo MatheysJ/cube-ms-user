@@ -1,12 +1,13 @@
 package com.cube.user.services;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.exceptions.NotFoundException;
 import com.cube.user.mappers.UserMapper;
-import com.cube.user.models.internal.ExceptionCode;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.internal.Role;
-import com.cube.user.models.internal.InternalUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.internal.ExceptionCode;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.internal.Role;
+import com.cube.user.models.InternalUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,31 +23,26 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-    public ResponseUser createUser(RequestUser body) {
-        InternalUser internalUser = userRepository.save(InternalUser.builder()
-                .name(body.getName())
-                .mail(body.getMail())
-                .password(body.getPassword())
-                .profilePicture(body.getProfilePicture())
-                .role(Role.USER)
-                .build());
+    public ResponseUser createUser(RequestUser body, String asaasId) {
+        InternalUser internalUser = userMapper.requestToInternal(body);
+        internalUser.setRole(Role.USER);
+        internalUser.setAsaasId(asaasId);
 
-        return userMapper.internalToResponse(internalUser);
+        InternalUser newUser = userRepository.save(internalUser);
+
+        return userMapper.internalToResponse(newUser);
     }
 
     public List<ResponseUser> getAllUsers() {
         Stream<InternalUser> users = userRepository.findAll().stream();
 
-        return users
-                .map(userMapper::internalToResponse)
-                .collect(Collectors.toList());
-
+        return users.map(userMapper::internalToResponse).collect(Collectors.toList());
     }
 
-    public ResponseUser getUserById(Long id) {
+    public InternalResponseUser getUserById(Long id) {
         InternalUser internalUser = getInternalUserByIdOrThrow(id);
 
-        return userMapper.internalToResponse(internalUser);
+        return userMapper.internalToInternalResponse(internalUser);
     }
 
     public Optional<ResponseUser> getUserByMail(String mail) {
@@ -63,7 +59,6 @@ public class UserService {
                 .name(body.getName())
                 .mail(body.getMail())
                 .password(body.getPassword())
-                .profilePicture(body.getProfilePicture())
                 .role(Role.USER)
                 .id(internalUser.getId())
                 .build());

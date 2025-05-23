@@ -1,7 +1,7 @@
 package com.cube.user.factory;
 
-import com.cube.user.models.request.RequestLogin;
-import com.cube.user.models.request.RequestValidate;
+import com.cube.user.dtos.request.RequestLogin;
+import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.utils.JsonUtils;
 
 public class TokenFactory {

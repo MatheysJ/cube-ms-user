@@ -1,21 +1,15 @@
 package com.cube.user.controllers;
 
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.InternalResponseUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -37,10 +31,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseUser> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<InternalResponseUser> getUserById(@PathVariable("id") Long id) {
         log.info("Start getting user by id");
 
-        ResponseUser user = userService.getUserById(id);
+        InternalResponseUser user = userService.getUserById(id);
 
         log.info("Successfully got user by id");
         return ResponseEntity.ok().body(user);
@@ -48,10 +42,13 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<ResponseUser> createUser(@RequestBody @Valid RequestUser body)  {
+    public ResponseEntity<ResponseUser> createUser(
+            @RequestHeader("x_customer_asaas_id") @Valid String asaasId,
+            @RequestBody @Valid RequestUser body
+    )  {
         log.info("Start creating user");
 
-        ResponseUser user = userService.createUser(body);
+        ResponseUser user = userService.createUser(body, asaasId);
 
         log.info("Successfully created user");
         return ResponseEntity.status(HttpStatus.CREATED).body(user);

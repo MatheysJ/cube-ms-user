@@ -1,11 +1,12 @@
 package com.cube.user.services;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.exceptions.NotFoundException;
 import com.cube.user.factory.UserFactory;
 import com.cube.user.mappers.UserMapper;
-import com.cube.user.models.internal.InternalUser;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.models.InternalUser;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,10 @@ class UserServiceTests {
     @InjectMocks
     private UserService userService;
 
-    private InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
-    private ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
-    private RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
+    private final InternalUser mockInternalUser = UserFactory.getMockOfInternalUser();
+    private final ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
+    private final RequestUser mockRequestUser = UserFactory.getMockOfRequestUser();
+    private final String mockAsaasId = UserFactory.getMockOfAsaasId();
 
     @Test
     void shouldGetAllUsersAndReturnCorrectData () {
@@ -59,7 +61,7 @@ class UserServiceTests {
         Mockito.when(userMapper.internalToResponse(Mockito.any())).thenReturn(mockResponseUser);
         Mockito.when(userRepository.save(Mockito.any(InternalUser.class))).thenReturn(mockInternalUser);
 
-        ResponseUser response = userService.createUser(mockRequestUser);
+        ResponseUser response = userService.createUser(mockRequestUser, mockAsaasId);
 
         Assertions.assertEquals(response.getClass(), ResponseUser.class);
     }
@@ -69,9 +71,9 @@ class UserServiceTests {
         Mockito.when(userMapper.internalToResponse(Mockito.any())).thenReturn(mockResponseUser);
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(mockInternalUser));
 
-        ResponseUser response = userService.getUserById(1L);
+        InternalResponseUser response = userService.getUserById(1L);
 
-        Assertions.assertEquals(response.getClass(), ResponseUser.class);
+        Assertions.assertEquals(response.getClass(), InternalResponseUser.class);
     }
 
     @Test
@@ -88,6 +90,7 @@ class UserServiceTests {
 
         Optional<ResponseUser> response = userService.getUserByMail("A@B");
 
+        //noinspection OptionalGetWithoutIsPresent
         Assertions.assertEquals(response.get().getClass(), ResponseUser.class);
     }
 

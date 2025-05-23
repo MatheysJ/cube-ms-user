@@ -3,17 +3,18 @@ package com.cube.user.controllers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.cube.user.dtos.response.InternalResponseUser;
 import com.cube.user.factory.UserFactory;
-import com.cube.user.models.request.RequestUser;
-import com.cube.user.models.response.ResponseUser;
+import com.cube.user.dtos.request.RequestUser;
+import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -23,10 +24,11 @@ public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private UserService userService;
 
     ResponseUser mockResponseUser = UserFactory.getMockOfResponseUser();
+    InternalResponseUser mockInternalResponseUser = UserFactory.getMockOfInternalResponseUser();
     String mockRequestUserAsJson = UserFactory.getMockOfRequestUserAsJson();
 
     @Test
@@ -40,7 +42,7 @@ public class UserControllerTest {
 
     @Test
     void shouldReturnUserById () throws Exception {
-        Mockito.when(userService.getUserById(Mockito.anyLong())).thenReturn(mockResponseUser);
+        Mockito.when(userService.getUserById(Mockito.anyLong())).thenReturn(mockInternalResponseUser);
 
         mockMvc.perform(
                 get("/v1/user/123").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk()
@@ -49,7 +51,7 @@ public class UserControllerTest {
 
     @Test
     void shouldReturnCreatedWithDataWhenCreatingAnUser () throws Exception {
-        Mockito.when(userService.createUser(Mockito.any(RequestUser.class))).thenReturn(mockResponseUser);
+        Mockito.when(userService.createUser(Mockito.any(RequestUser.class), Mockito.anyString())).thenReturn(mockResponseUser);
 
         mockMvc.perform(
                 post("/v1/user")

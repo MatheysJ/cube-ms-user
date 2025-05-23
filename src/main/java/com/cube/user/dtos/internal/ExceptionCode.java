@@ -1,4 +1,4 @@
-package com.cube.user.models.internal;
+package com.cube.user.dtos.internal;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

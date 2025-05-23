@@ -15,15 +15,27 @@ spring:
             ddl-auto: update
             generate-ddl: true
 
+    cloud:
+        openfeign:
+            client:
+                config:
+                    asaas:
+                        url: https://api-sandbox.asaas.com
+    config:
+        import: optional:configserver:http://localhost:8888
+
     flyway:
         locations: 'classpath:db/migration'
 
 security:
     token:
-        secret: "${JWT_SECRET:JWT_SECRET}"
+        secret: "${JWT_SECRET}"
         minutesToExpire: "${TOKEN_MINUTES_TO_EXPIRE:120}"
 
 server:
     port: 8080
     error:
         include-message: always
+
+asaas:
+    api-key: "${ASAAS_API_KEY}"
