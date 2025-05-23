@@ -9,7 +9,6 @@ import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.mappers.UserMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -74,8 +73,8 @@ public class AuthService {
         return subject;
     }
 
-    public HttpHeaders getAccessTokenHeaders(HttpServletRequest request, String token) {
-        String cookie = createAccessTokenCookie(request, token);
+    public HttpHeaders getAccessTokenHeaders(String token) {
+        String cookie = createAccessTokenCookie(token);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, cookie);
@@ -83,7 +82,7 @@ public class AuthService {
         return headers;
     }
 
-    private String createAccessTokenCookie(HttpServletRequest request, String token) {
+    private String createAccessTokenCookie(String token) {
         ResponseCookie cookie = ResponseCookie.from("accessToken", token)
                 .maxAge(Duration.ofMinutes(30))
                 .domain("localhost")
