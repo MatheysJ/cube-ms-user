@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<InternalUser, Long> {
     Optional<InternalUser> findById(Long id);
 
     Optional<InternalUser> findByMail(String mail);
+
+    Optional<InternalUser> findByCpfCnpj(String cpfCnpj);
 }

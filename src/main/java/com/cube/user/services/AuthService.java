@@ -9,7 +9,6 @@ import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.mappers.UserMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -36,9 +35,8 @@ public class AuthService {
 
     public ResponseUser register(RequestUser requestUser) {
         log.info("Starting user register validation");
-        if (this.userService.getUserByMail(requestUser.getMail()).isPresent()) {
-            throw new ConflitException(ExceptionCode.ALREADY_EXISTS);
-        }
+        checkEmail(requestUser);
+        checkCpfCnpj(requestUser);
 
         log.info("Starting User password encryption");
         String encryptedPassword = new BCryptPasswordEncoder().encode(requestUser.getPassword());
@@ -75,7 +73,16 @@ public class AuthService {
         return subject;
     }
 
-    private String createAccessTokenCookie(HttpServletRequest request, String token) {
+    public HttpHeaders getAccessTokenHeaders(String token) {
+        String cookie = createAccessTokenCookie(token);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, cookie);
+
+        return headers;
+    }
+
+    private String createAccessTokenCookie(String token) {
         ResponseCookie cookie = ResponseCookie.from("accessToken", token)
                 .maxAge(Duration.ofMinutes(30))
                 .domain("localhost")
@@ -86,14 +93,21 @@ public class AuthService {
 
         return cookie.toString();
     }
-    
-    public HttpHeaders getAccessTokenHeaders(HttpServletRequest request, String token) {
-        String cookie = createAccessTokenCookie(request, token);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.SET_COOKIE, cookie);
+    private void checkEmail (RequestUser requestUser) {
+        log.info("Checking if mail already exists");
+        if (this.userService.getUserByMail(requestUser.getMail()).isPresent()) {
+            throw new ConflitException(ExceptionCode.MAIL_ALREADY_EXISTS);
+        }
+        log.info("Mail verification concluded");
+    }
 
-        return headers;
+    private void checkCpfCnpj (RequestUser requestUser) {
+        log.info("Checking if cpf or cnpj already exists");
+        if (this.userService.getUserByCpfCnpj(requestUser.getCpfCnpj()).isPresent()) {
+            throw new ConflitException(ExceptionCode.CPF_CNPJ_ALREADY_EXISTS);
+        }
+        log.info("Cpf or cnpj verification concluded");
     }
 
 }

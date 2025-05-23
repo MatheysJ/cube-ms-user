@@ -35,6 +35,7 @@ public class InternalUser implements UserDetails {
 
     private Role role;
 
+    @Column(unique = true)
     private String cpfCnpj;
 
     private String phone;

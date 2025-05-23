@@ -7,7 +7,6 @@ import com.cube.user.dtos.response.ResponseLogin;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.dtos.response.ResponseValidate;
 import com.cube.user.services.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,11 +35,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseLogin> login(HttpServletRequest request, @RequestBody @Valid RequestLogin body)  {
+    public ResponseEntity<ResponseLogin> login(@RequestBody @Valid RequestLogin body)  {
         log.info("Starting login");
 
         String token = authService.login(body);
-        HttpHeaders cookieHeaders = authService.getAccessTokenHeaders(request, token);
+        HttpHeaders cookieHeaders = authService.getAccessTokenHeaders(token);
 
         log.info("Logged in successfully");
         return new ResponseEntity(new ResponseLogin(token), cookieHeaders, HttpStatus.CREATED);
