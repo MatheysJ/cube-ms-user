@@ -19,8 +19,8 @@ public class CustomerController {
 
     @GetMapping()
     public ResponseEntity<Customer> getCustomer(
-            @RequestHeader("customer_cpfCnpj") String cpfCnpj,
-            @RequestHeader("customer_id") String customerId
+            @RequestHeader(value = "customer_cpfCnpj", required = false) String cpfCnpj,
+            @RequestHeader(value = "customer_id", required = false) String customerId
     ) {
         log.info("Start getting user public info");
 

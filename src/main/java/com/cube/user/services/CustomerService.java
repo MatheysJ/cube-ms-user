@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -23,8 +24,8 @@ public class CustomerService {
     public Customer getCustomer(String customerId, String cpfCnpj) {
         log.info("Start getting user with customerId {} and cpfCnpj {}", customerId, cpfCnpj);
 
-        if (!customerId.isBlank()) return getCustomerByCpfCnpj(cpfCnpj);
-        return getCustomerByMail(customerId);
+        if (!Objects.isNull(customerId) && !customerId.isBlank()) return getCustomerByMail(customerId);
+        return getCustomerByCpfCnpj(cpfCnpj);
     }
 
     public Customer getCustomerByCpfCnpj(String cpfCnpj) {
