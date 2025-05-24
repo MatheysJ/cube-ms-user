@@ -27,5 +27,8 @@ public interface UserMapper {
     InternalResponseUser internalToInternalResponse(InternalUser internalUser);
 
     @BeanMapping(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-    Customer internalToCustomer(InternalUser internalResponseUser);
+    Customer internalToCustomer(InternalUser internalUser);
+
+    @BeanMapping(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+    Customer internalResponseToCustomer(InternalResponseUser internalResponseUser);
 }
