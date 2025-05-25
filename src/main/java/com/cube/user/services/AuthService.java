@@ -53,14 +53,16 @@ public class AuthService {
     }
 
     public String login(RequestLogin requestLogin) {
-        log.info("Starting user token generation");
+        log.info("Starting user login");
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(
                 requestLogin.getMail(),
                 requestLogin.getPassword()
         );
 
+        log.info("Starting user token authentication");
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
 
+        log.info("Starting user token generation");
         return tokenService.generateToken((UserDetails) auth.getPrincipal());
     }
 
