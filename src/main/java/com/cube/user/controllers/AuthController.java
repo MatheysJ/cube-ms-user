@@ -45,6 +45,16 @@ public class AuthController {
         return new ResponseEntity(new ResponseLogin(token), cookieHeaders, HttpStatus.CREATED);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity logout()  {
+        log.info("Starting logout");
+
+        HttpHeaders cookieHeaders = authService.getCookieHeaderToRemoveToken();
+
+        log.info("Logged out successfully");
+        return new ResponseEntity(null, cookieHeaders, HttpStatus.NO_CONTENT);
+    }
+
     @PostMapping("/validate")
     public ResponseEntity<ResponseValidate> validate(@RequestBody @Valid RequestValidate body)  {
         log.info("Starting token validation");

@@ -76,7 +76,7 @@ public class AuthService {
     }
 
     public HttpHeaders getAccessTokenHeaders(String token) {
-        String cookie = createAccessTokenCookie(token);
+        String cookie = createAccessTokenCookie(token, Duration.ofMinutes(30));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, cookie);
@@ -84,9 +84,18 @@ public class AuthService {
         return headers;
     }
 
-    private String createAccessTokenCookie(String token) {
+    public HttpHeaders getCookieHeaderToRemoveToken() {
+        String cookie = createAccessTokenCookie("", Duration.ofSeconds(0));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, cookie);
+
+        return headers;
+    }
+
+    private String createAccessTokenCookie(String token, Duration maxAge) {
         ResponseCookie cookie = ResponseCookie.from("accessToken", token)
-                .maxAge(Duration.ofMinutes(30))
+                .maxAge(maxAge)
                 .domain("localhost")
                 .secure(true)
                 .httpOnly(true)
