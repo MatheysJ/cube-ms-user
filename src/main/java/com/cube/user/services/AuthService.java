@@ -9,6 +9,7 @@ import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.mappers.UserMapper;
+import com.cube.user.models.InternalUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +17,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +63,7 @@ public class AuthService {
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
 
         log.info("Starting user token generation");
-        return tokenService.generateToken((UserDetails) auth.getPrincipal());
+        return tokenService.generateToken((InternalUser) auth.getPrincipal());
     }
 
     public String validate(RequestValidate requestValidate) {

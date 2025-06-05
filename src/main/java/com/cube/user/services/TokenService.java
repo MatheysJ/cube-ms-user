@@ -7,9 +7,9 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.cube.user.exceptions.InternalException;
 import com.cube.user.exceptions.UnauthorizedException;
 import com.cube.user.dtos.internal.ExceptionCode;
+import com.cube.user.models.InternalUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -30,7 +30,7 @@ public class TokenService {
     private String minutesToExpire;
 
 
-    public String generateToken (UserDetails user) {
+    public String generateToken (InternalUser user) {
         try {
             log.info("Start generating auth token");
             Algorithm algorithm = Algorithm.HMAC512(secret);
@@ -38,6 +38,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer(issuer)
                     .withSubject(user.getUsername())
+                    .withClaim("asaas_customer_id", user.getAsaasId())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
 
