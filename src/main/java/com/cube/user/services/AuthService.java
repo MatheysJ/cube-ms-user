@@ -1,6 +1,7 @@
 package com.cube.user.services;
 
 import com.cube.user.clients.asaas.AsaasClient;
+import com.cube.user.dtos.internal.asaas.request.CreateCustomerBody;
 import com.cube.user.dtos.internal.asaas.response.CreateCustomerResponse;
 import com.cube.user.exceptions.ConflitException;
 import com.cube.user.dtos.internal.ExceptionCode;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +44,8 @@ public class AuthService {
         String encryptedPassword = new BCryptPasswordEncoder().encode(requestUser.getPassword());
 
         log.info("Starting customer creation on Asaas");
-        CreateCustomerResponse asaasCustomer = asaasClient.createCustomer(userMapper.requestToAsaas(requestUser));
+        CreateCustomerBody asaasBody = userMapper.requestToAsaas(requestUser);
+        CreateCustomerResponse asaasCustomer = asaasClient.createCustomer(asaasBody);
 
         log.info("Starting to save User in database");
         requestUser.setPassword(encryptedPassword);
@@ -63,7 +66,9 @@ public class AuthService {
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
 
         log.info("Starting user token generation");
-        return tokenService.generateToken((InternalUser) auth.getPrincipal());
+        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = auth.getPrincipal();
+        return tokenService.generateToken((InternalUser) principal);
     }
 
     public String validate(RequestValidate requestValidate) {
