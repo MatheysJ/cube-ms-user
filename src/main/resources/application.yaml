@@ -3,9 +3,9 @@ spring:
         name: cube-ms-user
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/postgres
-        username: postgres
-        password: postgres
+        url: ${POSTGRESQL_URL}
+        username: ${POSTGRESQL_USERNAME}
+        password: ${POSTGRESQL_PASSWORD}
 
     jpa:
         show-sql: true
@@ -20,7 +20,7 @@ spring:
             client:
                 config:
                     asaas:
-                        url: https://api-sandbox.asaas.com
+                        url: ${ASAAS_URL}
     config:
         import: optional:configserver:http://localhost:8888
 
