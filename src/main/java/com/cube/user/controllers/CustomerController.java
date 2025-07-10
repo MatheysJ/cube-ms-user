@@ -18,12 +18,15 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping()
-    public ResponseEntity<Customer> getCurrentCustomer(@RequestHeader("customer_id") String customerId) {
-        log.info("Start getting user public info by id");
+    public ResponseEntity<Customer> getCustomer(
+            @RequestHeader(value = "customer_cpfCnpj", required = false) String cpfCnpj,
+            @RequestHeader(value = "customer_id", required = false) String customerId
+    ) {
+        log.info("Start getting user public info");
 
-        Customer user = customerService.getCustomerByCpfCnpj(customerId);
+        Customer user = customerService.getCustomer(customerId, cpfCnpj);
 
-        log.info("Successfully got user public info by id");
+        log.info("Successfully got user public info");
         return ResponseEntity.ok().body(user);
 
     }

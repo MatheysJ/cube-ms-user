@@ -1,6 +1,7 @@
 package com.cube.user.services;
 
 import com.cube.user.clients.asaas.AsaasClient;
+import com.cube.user.dtos.internal.asaas.request.CreateCustomerBody;
 import com.cube.user.dtos.internal.asaas.response.CreateCustomerResponse;
 import com.cube.user.exceptions.ConflitException;
 import com.cube.user.dtos.internal.ExceptionCode;
@@ -9,6 +10,7 @@ import com.cube.user.dtos.request.RequestUser;
 import com.cube.user.dtos.internal.RequestValidate;
 import com.cube.user.dtos.response.ResponseUser;
 import com.cube.user.mappers.UserMapper;
+import com.cube.user.models.InternalUser;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +18,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +44,8 @@ public class AuthService {
         String encryptedPassword = new BCryptPasswordEncoder().encode(requestUser.getPassword());
 
         log.info("Starting customer creation on Asaas");
-        CreateCustomerResponse asaasCustomer = asaasClient.createCustomer(userMapper.requestToAsaas(requestUser));
+        CreateCustomerBody asaasBody = userMapper.requestToAsaas(requestUser);
+        CreateCustomerResponse asaasCustomer = asaasClient.createCustomer(asaasBody);
 
         log.info("Starting to save User in database");
         requestUser.setPassword(encryptedPassword);
@@ -53,15 +56,19 @@ public class AuthService {
     }
 
     public String login(RequestLogin requestLogin) {
-        log.info("Starting user token generation");
+        log.info("Starting user login");
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(
                 requestLogin.getMail(),
                 requestLogin.getPassword()
         );
 
+        log.info("Starting user token authentication");
         Authentication auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return tokenService.generateToken((UserDetails) auth.getPrincipal());
+        log.info("Starting user token generation");
+        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = auth.getPrincipal();
+        return tokenService.generateToken((InternalUser) principal);
     }
 
     public String validate(RequestValidate requestValidate) {
@@ -74,7 +81,7 @@ public class AuthService {
     }
 
     public HttpHeaders getAccessTokenHeaders(String token) {
-        String cookie = createAccessTokenCookie(token);
+        String cookie = createAccessTokenCookie(token, Duration.ofMinutes(30));
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.SET_COOKIE, cookie);
@@ -82,9 +89,18 @@ public class AuthService {
         return headers;
     }
 
-    private String createAccessTokenCookie(String token) {
+    public HttpHeaders getCookieHeaderToRemoveToken() {
+        String cookie = createAccessTokenCookie("", Duration.ofSeconds(0));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, cookie);
+
+        return headers;
+    }
+
+    private String createAccessTokenCookie(String token, Duration maxAge) {
         ResponseCookie cookie = ResponseCookie.from("accessToken", token)
-                .maxAge(Duration.ofMinutes(30))
+                .maxAge(maxAge)
                 .domain("localhost")
                 .secure(true)
                 .httpOnly(true)

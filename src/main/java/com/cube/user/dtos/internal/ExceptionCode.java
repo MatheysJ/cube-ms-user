@@ -11,6 +11,7 @@ public enum ExceptionCode {
     INVALID_CREDENTIALS("Credenciais não batem"),
     USER_WITH_ID_DOESNT_EXIST("Usuário com id informado não existe"),
     USER_WITH_CPF_CNPJ_DOESNT_EXIST("Usuário com cpf ou cnpj informado não existe"),
+    USER_WITH_MAIL_DOESNT_EXIST("Usuário com e-mail informado não existe"),
     FAILED_TO_GENERATE_TOKEN("Erro ao gerar token de autenticação"),
     INVALID_TOKEN("O token informado não é válido");
 

@@ -18,7 +18,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
@@ -71,7 +70,7 @@ public class AuthServiceTest {
 
         authService.login(mockRequestLogin);
 
-        Mockito.verify(tokenService, Mockito.times(1)).generateToken(Mockito.any(UserDetails.class));
+        Mockito.verify(tokenService, Mockito.times(1)).generateToken(Mockito.any(InternalUser.class));
     }
 
     @Test
