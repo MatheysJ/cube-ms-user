@@ -32,6 +32,12 @@ security:
         secret: "${JWT_SECRET}"
         minutesToExpire: "${TOKEN_MINUTES_TO_EXPIRE:120}"
 
+eureka:
+    client:
+        registerWithEureka: true
+        fetchRegistry: true
+        serviceUrl:
+            defaultZone: ${EUREKA_URL}
 server:
     port: 8080
     error:
