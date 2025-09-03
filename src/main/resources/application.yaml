@@ -38,6 +38,12 @@ eureka:
         fetchRegistry: true
         serviceUrl:
             defaultZone: ${EUREKA_URL:https://cube-ms-eureka.onrender.com:8761/eureka/}
+    instance:
+      hostname: ${EUREKA_INSTANCE:65b654dc50e7.ngrok-free.app}
+      secure-port: 443
+      secure-port-enabled: true
+      non-secure-port-enabled: false
+      prefer-ip-address: false
 server:
     port: 8080
     error:

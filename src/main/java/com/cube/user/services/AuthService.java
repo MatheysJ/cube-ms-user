@@ -101,7 +101,7 @@ public class AuthService {
     private String createAccessTokenCookie(String token, Duration maxAge) {
         ResponseCookie cookie = ResponseCookie.from("accessToken", token)
                 .maxAge(maxAge)
-                .domain("localhost")
+                .domain("matheus-junior.xyz")
                 .secure(true)
                 .httpOnly(true)
                 .path("/")
