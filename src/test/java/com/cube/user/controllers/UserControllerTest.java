@@ -55,6 +55,7 @@ public class UserControllerTest {
 
         mockMvc.perform(
                 post("/v1/user")
+                        .header("x_customer_asaas_id", UserFactory.getMockOfAsaasId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mockRequestUserAsJson)
         ).andExpect(status().isCreated());

@@ -58,6 +58,7 @@ class UserServiceTests {
 
     @Test
     void shouldCreateUserWithRequest () {
+        Mockito.when(userMapper.requestToInternal(Mockito.any(RequestUser.class))).thenReturn(mockInternalUser);
         Mockito.when(userMapper.internalToResponse(Mockito.any())).thenReturn(mockResponseUser);
         Mockito.when(userRepository.save(Mockito.any(InternalUser.class))).thenReturn(mockInternalUser);
 
@@ -68,7 +69,8 @@ class UserServiceTests {
 
     @Test
     void shouldGetUserById () {
-        Mockito.when(userMapper.internalToResponse(Mockito.any())).thenReturn(mockResponseUser);
+        Mockito.when(userMapper.internalToInternalResponse(Mockito.any()))
+                .thenReturn(UserFactory.getMockOfInternalResponseUser());
         Mockito.when(userRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(mockInternalUser));
 
         InternalResponseUser response = userService.getUserById(1L);
