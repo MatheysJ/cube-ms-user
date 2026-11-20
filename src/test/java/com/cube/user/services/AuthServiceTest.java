@@ -1,5 +1,8 @@
 package com.cube.user.services;
 
+import com.cube.user.clients.asaas.AsaasClient;
+import com.cube.user.dtos.internal.asaas.request.CreateCustomerBody;
+import com.cube.user.dtos.internal.asaas.response.CreateCustomerResponse;
 import com.cube.user.exceptions.ConflitException;
 import com.cube.user.factory.TokenFactory;
 import com.cube.user.factory.UserFactory;
@@ -36,6 +39,9 @@ public class AuthServiceTest {
     @Mock
     private UserMapper userMapper;
 
+    @Mock
+    private AsaasClient asaasClient;
+
     @InjectMocks
     private AuthService authService;
 
@@ -55,7 +61,11 @@ public class AuthServiceTest {
     @Test
     void shouldReturnCreatedUserWhenUserIsRegisteredSuccessfully() {
         Mockito.when(userService.getUserByMail(Mockito.anyString())).thenReturn(Optional.empty());
-        Mockito.when(userService.createUser(Mockito.any(RequestUser.class), Mockito.anyString())).thenReturn(mockResponseUser);
+        Mockito.when(userMapper.requestToAsaas(Mockito.any(RequestUser.class))).thenReturn(new CreateCustomerBody());
+        Mockito.when(asaasClient.createCustomer(Mockito.any(CreateCustomerBody.class)))
+                .thenReturn(CreateCustomerResponse.builder().id(UserFactory.getMockOfAsaasId()).build());
+        Mockito.when(userService.createUser(Mockito.any(RequestUser.class), Mockito.eq(UserFactory.getMockOfAsaasId())))
+                .thenReturn(mockResponseUser);
 
         ResponseUser response = authService.register(mockRequestUser);
 

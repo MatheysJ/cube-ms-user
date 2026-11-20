@@ -39,6 +39,8 @@ public class UserFactory {
                 .mail(mailMock)
                 .name(nameMock)
                 .password(passwordMock)
+                .cpfCnpj(cpfCnpjMock)
+                .phone(phoneMock)
                 .build();
     }
 
